@@ -28,21 +28,6 @@ String page = "<body onload=\"javascript:start();\">"
 + "function getIP() {\n"
 + " return document.getElementById('iptext').value;\n"
 + "}\n"
-+ "function calculateParams() {\n"
-+ " var ret = '';\n"
-+ " document.querySelectorAll('.slider').forEach(function(slider) {\n"
-+ "   var paramID = slider.id;\n"
-+ "   var paramValue = slider.value;\n"
-+ "   ret+='[ \'/' + paramID + '\' ,' + paramValue + ' ]';\n"
-+ " });\n"
-+ " console.log(ret);\n"
-+ " return ret;\n"
-+ "}\n"
-//FUNCTION SEND PARAMS TO PD!
-+ "function sendParams() {\n"
-+ " if(send.readyState != send.CLOSED && send.readyState != send.CONNECTING)\n"
-+ "     send.send(calculateParams());\n"
-+ "}\n"
 //FUNCTION reconnecting to PD!
 + "function reconnectToWebsocket() {\n"
 + " send = new WebSocket('ws://' + getIP() + ':3334');\n"
@@ -55,7 +40,8 @@ String page = "<body onload=\"javascript:start();\">"
 + "     console.log(id+'_label');\n"
 + "     var out = document.getElementById(id+'_label');"
 + "     out.innerHTML = this.value;"
-+ "     sendParams();"
++ "     var val = slider.value;"
++ "     send.send(id + '#' + slider.value);"
 + "   }"
 + "  });"
 + " reconnectToWebsocket();\n"
@@ -63,7 +49,6 @@ String page = "<body onload=\"javascript:start();\">"
 + " Socket.onmessage = function(evt) {\n"
 + "   document.getElementById(\"rxConsole\").value = \"\";\n"
 + "   document.getElementById(\"rxConsole\").value += evt.data;\n"
-+ "   sendParams();\n"
 + " }\n"
 + "}\n"
 + "</script>\n"
@@ -196,8 +181,9 @@ void startWebSocket() {
 }
 
 void sendValues() {
- char buf[28];
+ char buf[27];
  sprintf(buf, "X:%05uY:%05uZ:%05uGATE:%01u", x_value, y_value, z_value, gate_value);
+ Serial.println(buf);
  webSocket.broadcastTXT(buf, sizeof(buf)); 
 }
 
