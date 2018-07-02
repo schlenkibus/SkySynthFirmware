@@ -14,17 +14,79 @@ long y_value = 0;
 long z_value = 0;
 long gate_value = 0;
 
-const char* ssid = "BioMuell23";
+const char* ssid = "SkySynth V2";
 const char* password = "sunaanus";
 
 ESP8266WebServer server(80);
 WebSocketsServer webSocket(81);
 IPAddress apIP(42, 42, 42, 42);
 
+const String getCanvasDrawing() {
+  return String("<body onload='javascript:start();'><script>function drawCanvas() {")
+         + "       var ctx = document.getElementById('canvas').getContext('2d'); "
+         + "     var canvas = document.getElementById('canvas'); "
+         + "     ctx.clearRect(0, 0, canvas.width, canvas.height); "
+         + "     ctx.fillStyle = 'rgb(0,0,0)'; "
+         + "     ctx.font = '12px Arial'; "
+         + "     ctx.beginPath(); "
+         + "     ctx.moveTo(40, 30); "
+         + "     ctx.lineTo(40, 730); "
+         + "     ctx.lineTo(1140, 730); "
+         + "     ctx.strokeStyle = 'rgb(0,0,0)'; "
+         + "     ctx.lineWidth = 3; "
+         + "     ctx.stroke(); "
+         + "     ctx.beginPath(); "
+         + "     ctx.strokeStyle = 'rgb(224,224,224)'; "
+         + "     var i = 40; "
+         + "     while (i < 1040) {"
+         + "           i += 100; "
+         + "           ctx.moveTo(i, 30); "
+         + "           ctx.lineTo(i, 727); "
+         + "      }"
+         + "       ctx.moveTo(0, 65); "
+         + "        i = 30; "
+         + "        while (i < 730) {  "
+         + "            ctx.moveTo(42, i); "
+         + "            ctx.lineTo(1040, i); "
+         + "            i += 35; "
+         + "        }"
+         + "       ctx.stroke(); "
+         + "       ctx.fillText('100', 8, 40); "
+         + "       ctx.fillText('50', 15, 382); "
+         + "       ctx.fillText('50', 520, 750); "
+         + "       ctx.fillText('100', 1040, 750); "
+         + "       ctx.fillText('0', 15, 730); "
+         + "       ctx.fillText('0', 40, 757); "
+         + "       ctx.font = 'bold 18px Arial'; "
+         + "       ctx.fillText('y', 10, 80); "
+         + "       ctx.fillText('x', 500, 750); "
+         + "       ctx.beginPath(); "
+         + "       ctx.strokeStyle = 'rgb(0,0,0)'; "
+         + "       ctx.lineWidth = 4; "
+         + "        var j = 110; "
+         + "        while (j <= 1040) {  "
+         + "          ctx.moveTo(j, 725); "
+         + "          ctx.lineTo(j, 735); "
+         + "          j += 100; "
+         + "        }"
+         + "        j = 30; "
+         + "        while (j < 730) {"
+         + "          ctx.moveTo(35, j); "
+         + "          ctx.lineTo(45, j); "
+         + "          j += 70; "
+         + "        }"
+         + "        ctx.stroke(); "
+         + "        if (gate == 1) {  "
+         + "          ctx.beginPath(); "
+         + "          ctx.arc(40 + x_value * 10, 40 + Number(100 - y_value) * 7 , Math.max(Number(100 - z_value) * 0.3, 3), 0, 2 * Math.PI); "
+         + "          ctx.fillStyle = 'rgb(238,130,238)'; "
+         + "          ctx.fill(); "
+         + "        }"
+         + "    }";
+}
+
 const String getJavaScript() {
-  return String("<body onload='javascript:start();'>")
-         + "<script>\n"
-         + "var Socket;\n"
+  return String("var Socket;\n")
          + "var send;\n"
          + "var x_value;\n"
          + "var y_value;\n"
@@ -98,100 +160,81 @@ const String getJavaScript() {
          + "}\n"
          + "function clamp(num, min, max) {\n"
          + "  return num <= min ? min : num >= max ? max : num;\n"
-         + "}\n"
-         + "  function drawCanvas() {\n"
-         + "    var ctx = document.getElementById('canvas').getContext('2d');\n"
-         + "    ctx.clearRect(0, 0, canvas.width, canvas.height);\n"
-         + "    ctx.fillStyle = 'rgb(0,0,0)';\n"
-         + "    ctx.font = '12px Arial';\n"
-         + "    ctx.fillText('100', 30, 40);\n"
-         + "    ctx.fillText('50', 30, 270);\n"
-         + "    ctx.font = '14px Arial';\n"
-         + "    ctx.beginPath();\n"
-         + "    ctx.moveTo(40,0);\n"
-         + "    ctx.lineTo(40, 500);\n"
-         + "    ctx.lineTo(740, 500);\n"
-         + "    ctx.strokeStyle = 'rgb(0, 0, 0)';\n"
-         + "    ctx.stroke();\n"
-         + "    ctx.fillStyle = 'rgb(' + Number(130 + 100 - z_value) + ',133,' + Number(130 + z_value) + ')';\n"
-         + "    ctx.beginPath();\n"
-         + "    var ypos =  500 - Number(y_value * 5);\n"
-         + "    if(gate == 1) {\n"
-         + "     ctx.arc(40 + x_value * 7, ypos, 20, 0, 2 * Math.PI);\n"
-         + "     ctx.fill();\n"
-         + "    }\n"
-         + "}\n"
-         + "</script>\n";
+         + "}</script>";
 }
 
 const String getCss() {
-  return String(" <style>\n")
+  return String("<style>\n")
          + "p {"
-         + "  display: inline;"
+         + "  display: inline; "
          + " }"
          + ".group {"
-         + "   width: 300px;"
-         + "   padding: 20px;"
-         + "   background-color: green;"
+         + "   width: 300px; "
+         + "   padding: 20px; "
+         + "   background-color: green; "
          + "}"
          + ".parameter {"
-         + "   padding: 5px;"
-         + "   background-color: lightgrey;"
-         + "   text-align: center;"
-         + "   display: block;"
+         + "   padding: 5px; "
+         + "   background-color: lightgrey; "
+         + "   text-align: center; "
+         + "   display: block; "
          + "}"
-         + " .parameter.p:before {"
-         + "  display: block;"
+         + " .parameter.p: before {"
+         + "  display: block; "
          + "}"
-
          + ".parameter p {"
-         + "  color: black;"
-         + "  font-style: oblique;"
-         + "  font-size: 20pt;"
-         + "  display: block;"
-         + "  margin: -4px;"
+         + "  color: black; "
+         + "  font-style: oblique; "
+         + "  font-size: 20pt; "
+         + "  display: block; "
+         + "  margin: -4px; "
          + "}"
-
          + ".osc {"
-         + "background-color: lightcoral;"
+         + "background-color: lightcoral; "
          + "}"
          + ".filter {"
-         + "background-color: lightpink;"
+         + "background-color: lightpink; "
          + "}"
          + ".volume {"
-         + "background-color: lightsalmon;"
+         + "background-color: lightsalmon; "
          + "}"
          + ".effects {"
-         + "background-color: chartreuse;"
+         + "background-color: cadetblue; "
          + "}"
-
+         + "#params {"
+         + "padding-left: -40%;"
+         + "display: inline-flex;"
+         + "}"
+         //MC Stuff
          + ".content {"
-         + "margin: 4px -5px -5px -5px;"
-         + "  padding-top: 6px;"
-         + "  width: 100%;"
-         + "  display: none;"
-         + "  background-color: lightsteelblue;"
-         + "  text-align: center;"
+         + "  margin-top: 5px; "
+         + "  padding-top: 6px; "
+         + "  border-style: solid; "
+         + "  display: none; "
+         + "  background-color: lightsteelblue; "
+         + "  text-align: center; "
          + "}"
          + ".content p {"
-         + "padding-top: 6px;"
-         + "font-size: 14pt;"
-         + "font-style: normal;"
+         + "padding-top: 6px; "
+         + "font-size: 14pt; "
+         + "font-style: normal; "
+         + "}"
+         + "#canvas {"
+         + "display:block;"
          + "}"
          + ".header div {"
-         + "  border-width: 20px;"
-         + "  border-style: outset;"
+         + "  border-width: 20px; "
+         + "  border-style: outset; "
          + "}"
-         + ".header:hover {"
-         + "  color: blue;"
-         + "}"
-         + "</style>";
+         + ".header: hover {"
+         + "  color: blue; "
+         + "}\n";
 }
 
 const String getGeneral() {
-  return String("<textarea id=\"rxConsole\" readonly></textarea>\n")
-         + "<body>"
-         + "<canvas id='canvas' width='750' height='554'></canvas>\n"
+  return String("<body><textarea id = \"rxConsole\" readonly></textarea>\n")
+         + "<canvas id='canvas' width='1150' height='800'></canvas>\n"
+         + "<div id='params'>"
          + "<div class='volume group'><div class='parameter'><h2>Volume</h2>"
          + "<input type='range' min='0' max='5' value='1.0' step='0.1' class='slider param' id='master_vol'>"
          + "<p id='master_vol_label'>1.0</p><br>"
@@ -201,8 +244,8 @@ const String getGeneral() {
          + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_y' class='mod_value'><p id='master_vol_y_label'>0</p><br>"
          + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_z' class='mod_value'><p id='master_vol_z_label'>0</p><br>"
          + "</div></div></div>"
-         + "<br>"
-         + "<div id='params'>";
+         + "<br>";
+
 }
 
 const String getOSC1() {
@@ -329,6 +372,22 @@ const String getEffects() {
          + "</body>";
 }
 
+const String getSliderCss() {
+  return String("input[type=range] {")
+  + "height: 34px;-webkit-appearance: none;margin: 10px 0;width: 100%;}"
+  + "input[type=range]:focus {  outline: none;}"
+  + "input[type=range]::-webkit-slider-runnable-track {  width: 100%;height: 20px;cursor: pointer;animate: 0.2s;box-shadow: 0px 0px 0px #000000;background: #B6B1B1;border-radius: 50px;border: 1px solid #8A8A8A;}"
+  + "input[type=range]::-webkit-slider-thumb {box-shadow: 0px 0px 10px #828282;border: 4px solid #8A8A8A;height: 24px;width: 24px;border-radius: 50px;background: #DA78D7;cursor: pointer;-webkit-appearance: none;margin-top: -4.5px;}"
+  + "input[type=range]:focus::-webkit-slider-runnable-track {background: #B6B1B1;}input[type=range]::-moz-range-track {width: 100%;height: 20px;cursor: pointer;animate: 0.2s;box-shadow: 0px 0px 0px #000000;background: #B6B1B1;border-radius: 50px;border: 1px solid #8A8A8A;}"
+  + "input[type=range]::-moz-range-thumb {box-shadow: 0px 0px 10px #828282;border: 4px solid #8A8A8A;height: 24px;width: 24px;border-radius: 50px;background: #DA78D7;cursor: pointer;}"
+  + "input[type=range]::-ms-track {width: 100%;height: 20px;cursor: pointer;animate: 0.2s;background: transparent;border-color: transparent;color: transparent;}"
+  + "input[type=range]::-ms-fill-lower {background: #B6B1B1;border: 1px solid #8A8A8A;border-radius: 100px;box-shadow: 0px 0px 0px #000000;}"
+  + "input[type=range]::-ms-fill-upper {background: #B6B1B1;border: 1px solid #8A8A8A;border-radius: 100px;box-shadow: 0px 0px 0px #000000;}"
+  + "input[type=range]::-ms-thumb {margin-top: 1px;box-shadow: 0px 0px 10px #828282;border: 4px solid #8A8A8A;height: 24px;width: 24px;border-radius: 50px;background: #DA78D7;cursor: pointer;}"
+  + "input[type=range]:focus::-ms-fill-lower {background: #B6B1B1;}"
+  + "input[type=range]:focus::-ms-fill-upper {background: #B6B1B1;}</style>";
+}
+
 String tutorial = "Tutorial WIP\n";
 
 char buf[13];
@@ -336,7 +395,7 @@ int normalizedX;
 int normalizedY;
 int normalizedZ;
 
-const auto lenght = getJavaScript().length() + getCss().length() + getGeneral().length() + getOSC1().length() + getOSC2().length() + getFilterLP().length() + getFilterBP().length() + getEffects().length();
+const auto lenght = getCanvasDrawing().length() + getJavaScript().length() + getCss().length() + getSliderCss().length() + getGeneral().length() + getOSC1().length() + getOSC2().length() + getFilterLP().length() + getFilterBP().length() + getEffects().length();
 
 void setup() {
   ESP.wdtDisable();
@@ -358,8 +417,10 @@ void setup() {
     Serial.println("Requested / ");
     ESP.wdtDisable();
     server.setContentLength(lenght);
-    server.send(200, "text/html", getJavaScript());
+    server.send(200, "text/html", getCanvasDrawing());
+    server.sendContent(getJavaScript());
     server.sendContent(getCss());
+    server.sendContent(getSliderCss());
     server.sendContent(getGeneral());
     server.sendContent(getOSC1());
     server.sendContent(getOSC2());
