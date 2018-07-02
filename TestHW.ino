@@ -244,7 +244,7 @@ const String getGeneral() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_x' class='mod_value'><p id='master_vol_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_y' class='mod_value'><p id='master_vol_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_z' class='mod_value'><p id='master_vol_z_label'>0</p><br>"
-         + "</div></div></div>"
+         + "</div>"+ addHelpBox("volume", "Gesamtlautstaerke / Volume - Lautstaerke des Instruments (Wenn Ausfaelle bei Audioausgabe auftreten diesen Parameter niedriger stellen!)") + "</div></div>"
          + "<br>";
 
 }
@@ -261,7 +261,7 @@ const String getOSC1() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_x' class='mod_value'><p id='osc_square_amp_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_y' class='mod_value'><p id='osc_square_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_z' class='mod_value'><p id='osc_square_amp_z_label'>0</p><br>"
-         + "</div></div>"
+         + "</div>"+ addHelpBox("osc1amp", "Oszillator Amplitiude - Lautstaerke des Oszillators (In Prozent 0-100).") + "</div>"
          + "<br>"
          + "<div class='parameter'>"
          + "<h2>OSC 1 Pitch</h2>"
@@ -272,7 +272,7 @@ const String getOSC1() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_x' class='mod_value'><p id='osc_square_pitch_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_y' class='mod_value'><p id='osc_square_pitch_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_z' class='mod_value'><p id='osc_square_pitch_z_label'>0</p><br>"
-         + "</div></div>"
+         + "</div>"+ addHelpBox("osc1pitch", "Oszillator Pitch - Frequenz des Oszillators (In MIDI-Noten 0-127).") + "</div>"
          + "<br>"
          + "</div>";
 }
@@ -285,7 +285,7 @@ const String getOSC2() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_x' class='mod_value'><p id='osc_sine_amp_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_y' class='mod_value'><p id='osc_sine_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_z' class='mod_value'><p id='osc_sine_amp_z_label'>0</p><br>"
-         + "</div></div><br><div class='parameter'>"
+         + "</div>"+ addHelpBox("osc2amp", "Oszillator Amplitiude - Lautstaerke des Oszillators (In Prozent 0-100).") + "</div><br><div class='parameter'>"
          + "<h2>OSC 2 Pitch</h2>"
          + "<input type='range' min='0' max='127' value='0' step='0.01' class='slider param' id='osc_sine_pitch'>"
          + "<p id='osc_sine_pitch_label'>0</p><br>"
@@ -294,7 +294,7 @@ const String getOSC2() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_x' class='mod_value'><p id='osc_sine_pitch_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_y' class='mod_value'><p id='osc_sine_pitch_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_z' class='mod_value'><p id='osc_sine_pitch_z_label'>0</p><br>"
-         + "</div></div></div></div>";
+         + "</div>"+ addHelpBox("osc2pitch", "Oszillator Pitch - Frequenz des Oszillators (In MIDI-Noten 0-127).") + "</div></div></div>";
 }
 
 const String getFilterLP() {
@@ -308,7 +308,7 @@ const String getFilterLP() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_x' class='mod_value'><p id='lp_co_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_y' class='mod_value'><p id='lp_co_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_z' class='mod_value'><p id='lp_co_z_label'>0</p><br>"
-         + "</div></div><br>"
+         + "</div>"+ addHelpBox("lpco", "LowPass Cutoff - An welcher Frequenz soll der LowPass-Filter den Sound beschneiden. (In MIDI-Noten 0-127)") + "</div><br>"
          + "<div class='parameter'><h2>LowPass Filter Mix</h2>"
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='lp_mix'>"
          + "<p id='lp_mix_label'>0.0</p><br>"
@@ -317,7 +317,7 @@ const String getFilterLP() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_x' class='mod_value'><p id='lp_mix_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_y' class='mod_value'><p id='lp_mix_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_z' class='mod_value'><p id='lp_mix_z_label'>0</p><br>"
-         + "</div></div></div><br>";
+         + "</div>"+ addHelpBox("lpmix", "LowPass Mix - Wie viel des durch Lowpass gefilterten Sounds soll zu hoeren sein (0 - 100%)") + "</div></div><br>";
 }
 
 const String getFilterBP() {
@@ -329,7 +329,7 @@ const String getFilterBP() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_x' class='mod_value'><p id='bp_pos_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_y' class='mod_value'><p id='bp_pos_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_z' class='mod_value'><p id='bp_pos_z_label'>0</p><br>"
-         + "</div></div><br>"
+         + "</div>"+ addHelpBox("bppos", "BandPass Position - An welcher Frequenz-Position soll der BandPass greifen. (In MIDI-Noten 0-127)") + "</div><br>"
          + "<div class='parameter'><h2>BandPass Band Width</h2>"
          + "<input type='range' min='1' max='10' value='0' step='0.1' class='slider param' id='bp_width'>"
          + "<p id='bp_width_label'>0</p><br>"
@@ -340,7 +340,7 @@ const String getFilterBP2() {
   return String("<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_x' class='mod_value'><p id='bp_width_x_label'>0</p><br>")
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_y' class='mod_value'><p id='bp_width_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_z' class='mod_value'><p id='bp_width_z_label'>0</p><br>"
-         + "</div></div><br>"
+         + "</div>"+ addHelpBox("bpwidth", "BandPass Bandbreite - Wie weit um die BandPass - Position soll durchgelassen werden. (0-10)") + "</div><br>"
          + "<div class='parameter'><h2>BandPass Filter Mix</h2>"
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='bp_mix'>"
          + "<p id='bp_mix_label'>0.0</p><br>"
@@ -349,7 +349,7 @@ const String getFilterBP2() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_x' class='mod_value'><p id='bp_mix_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_y' class='mod_value'><p id='bp_mix_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_z' class='mod_value'><p id='bp_mix_z_label'>0</p><br>"
-         + "</div></div></div></div><br>";
+         + "</div>"+ addHelpBox("bpmix", "BandPass Mix - Wie viel des durch Bandpass gefilterten Sounds soll zu hoeren sein (0 - 100%)") + "</div></div></div><br>";
 }
 
 const String getEffects() {
@@ -362,7 +362,7 @@ const String getEffects() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_x' class='mod_value'><p id='ar_time_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_y' class='mod_value'><p id='ar_time_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_z' class='mod_value'><p id='ar_time_z_label'>0</p><br>"
-         + "</div></div><br>"
+         + "</div>"+ addHelpBox("ar_time", "Envelope - Attack und Release: Zeit bis Audio-Rampe auf dem Maximalen oder Minimalen Wert ist. In Millisekunden.") + "</div><br>"
          + "<div class='parameter'><h2>Delay Amp</h2>"
          + "<input type='range' min='0' max='0.5' value='0' step='0.01' class='slider param' id='delay_amp'>"
          + "<p id='delay_amp_label'>0</p><br>"
@@ -371,7 +371,7 @@ const String getEffects() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_x' class='mod_value'><p id='delay_amp_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_y' class='mod_value'><p id='delay_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_z' class='mod_value'><p id='delay_amp_z_label'>0</p><br>"
-         + "</div>"+ addHelpBox("delay_amp", "Delay - Wiederholt vorhergehende Audio-Signale mit entsprechenem Faktor!") + "</div></div></div>"
+         + "</div>"+ addHelpBox("delay_amp", "Delay - Wiederholt vorhergehende Audio-Signale mit entsprechenem Faktor. (0% - 50%)") + "</div></div></div>"
          + "</body>";
 }
 
