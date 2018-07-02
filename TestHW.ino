@@ -31,7 +31,7 @@ const String getCanvasDrawing() {
          + "     ctx.beginPath(); "
          + "     ctx.moveTo(40, 30); "
          + "     ctx.lineTo(40, 730); "
-         + "     ctx.lineTo(1140, 730); "
+         + "     ctx.lineTo(1040, 730); "
          + "     ctx.strokeStyle = 'rgb(0,0,0)'; "
          + "     ctx.lineWidth = 3; "
          + "     ctx.stroke(); "
@@ -54,16 +54,16 @@ const String getCanvasDrawing() {
          + "       ctx.fillText('100', 8, 40); "
          + "       ctx.fillText('50', 15, 382); "
          + "       ctx.fillText('50', 520, 750); "
-         + "       ctx.fillText('100', 1040, 750); "
+         + "       ctx.fillText('100', 1000, 750); "
          + "       ctx.fillText('0', 15, 730); "
          + "       ctx.fillText('0', 40, 757); "
          + "       ctx.font = 'bold 18px Arial'; "
          + "       ctx.fillText('y', 10, 80); "
-         + "       ctx.fillText('x', 500, 750); "
+         + "       ctx.fillText('x', 950, 750); "
          + "       ctx.beginPath(); "
          + "       ctx.strokeStyle = 'rgb(0,0,0)'; "
          + "       ctx.lineWidth = 4; "
-         + "        var j = 110; "
+         + "        var j = 40; "
          + "        while (j <= 1040) {  "
          + "          ctx.moveTo(j, 725); "
          + "          ctx.lineTo(j, 735); "
@@ -78,7 +78,7 @@ const String getCanvasDrawing() {
          + "        ctx.stroke(); "
          + "        if (gate == 1) {  "
          + "          ctx.beginPath(); "
-         + "          ctx.arc(40 + x_value * 10, 40 + Number(100 - y_value) * 7 , Math.max(Number(100 - z_value) * 0.3, 3), 0, 2 * Math.PI); "
+         + "          ctx.arc(40 + x_value * 10, 30 + Number(100 - y_value) * 7 , Math.max(Number(100 - z_value) * 0.4, 5), 0, 2 * Math.PI); "
          + "          ctx.fillStyle = 'rgb(238,130,238)'; "
          + "          ctx.fill(); "
          + "        }"
@@ -146,13 +146,12 @@ const String getJavaScript() {
          + "  });\n"
          + " Socket = new WebSocket('ws://' + window.location.hostname + ':81/');\n"
          + " Socket.onmessage = function(evt) {\n"
-         + "   document.getElementById(\"rxConsole\").value = \"\";\n"
-         + "   document.getElementById(\"rxConsole\").value += evt.data;\n"
          + "   var splitData = evt.data.split(\":\");\n"
          + "   x_value = splitData[0];\n"
          + "   y_value = splitData[1];\n"
          + "   z_value = splitData[2];\n"
          + "   gate = splitData[3];\n"
+         + "   document.getElementById(\"rxConsole\").value = 'X: ' + x_value + ' Y: ' + y_value + ' Z: ' + z_value;\n"
          + "   send.send('gate#' + gate);\n"
          + "   modulate();\n"
          + " drawCanvas();\n"
@@ -228,21 +227,23 @@ const String getCss() {
          + "}"
          + ".header: hover {"
          + "  color: blue; "
-         + "}\n";
+         + "}\n#rxConsole {font-size: 25pt; color: #DA78D7; text-align: center; resize: none; background-color: grey; border: none; padding-top: 20px font-style: bold; }"
+         + ".top {  background-color: grey; display: block-inline; width: 1360px; text-align: center;"
+         + "}";
 }
 
 const String getGeneral() {
-  return String("<body><textarea id = \"rxConsole\" readonly></textarea>\n")
-         + "<canvas id='canvas' width='1150' height='800'></canvas>\n"
+  return String("<body><div class='top'><textarea id = \"rxConsole\" readonly></textarea>\n")
+         + "<canvas id='canvas' width='1150' height='800'></canvas><a href='/tutorial'>How To Play!</a></div>\n"
          + "<div id='params'>"
          + "<div class='volume group'><div class='parameter'><h2>Volume</h2>"
          + "<input type='range' min='0' max='5' value='1.0' step='0.1' class='slider param' id='master_vol'>"
          + "<p id='master_vol_label'>1.0</p><br>"
          + "<div id='master_vol_mc' class='header' onclick=showHelp('master_vol_mc_content')>Macro Controls...</div>"
          + "<div id='master_vol_mc_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_x' class='mod_value'><p id='master_vol_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_y' class='mod_value'><p id='master_vol_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_z' class='mod_value'><p id='master_vol_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_x' class='mod_value'><p id='master_vol_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_y' class='mod_value'><p id='master_vol_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='master_vol_z' class='mod_value'><p id='master_vol_z_label'>0</p><br>"
          + "</div></div></div>"
          + "<br>";
 
@@ -257,9 +258,9 @@ const String getOSC1() {
          + "<p id='osc_square_amp_label'>0.0</p><br>"
          + "<div id='osc_square_amp_mc' class='header' onclick=showHelp('osc_square_amp_mc_content')>Macro Controls...</div>"
          + "<div id='osc_square_amp_mc_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_x' class='mod_value'><p id='osc_square_amp_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_y' class='mod_value'><p id='osc_square_amp_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_z' class='mod_value'><p id='osc_square_amp_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_x' class='mod_value'><p id='osc_square_amp_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_y' class='mod_value'><p id='osc_square_amp_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_amp_z' class='mod_value'><p id='osc_square_amp_z_label'>0</p><br>"
          + "</div></div>"
          + "<br>"
          + "<div class='parameter'>"
@@ -268,9 +269,9 @@ const String getOSC1() {
          + "<p id='osc_square_pitch_label'>0</p><br>"
          + "<div id='osc_square_pitch_mc' class='header' onclick=showHelp('osc_square_pitch_mc_content')>Macro Controls...</div>"
          + "<div id='osc_square_pitch_mc_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_x' class='mod_value'><p id='osc_square_pitch_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_y' class='mod_value'><p id='osc_square_pitch_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_z' class='mod_value'><p id='osc_square_pitch_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_x' class='mod_value'><p id='osc_square_pitch_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_y' class='mod_value'><p id='osc_square_pitch_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_square_pitch_z' class='mod_value'><p id='osc_square_pitch_z_label'>0</p><br>"
          + "</div></div>"
          + "<br>"
          + "</div>";
@@ -281,18 +282,18 @@ const String getOSC2() {
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='osc_sine_amp'><p id='osc_sine_amp_label'>0.0</p><br>"
          + "<div id='osc_sine_amp_mc' class='header' onclick=showHelp('osc_sine_amp_mc_content')>Macro Controls...</div>"
          + "<div id='osc_sine_amp_mc_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_x' class='mod_value'><p id='osc_sine_amp_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_y' class='mod_value'><p id='osc_sine_amp_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_z' class='mod_value'><p id='osc_sine_amp_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_x' class='mod_value'><p id='osc_sine_amp_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_y' class='mod_value'><p id='osc_sine_amp_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_z' class='mod_value'><p id='osc_sine_amp_z_label'>0</p><br>"
          + "</div></div><br><div class='parameter'>"
          + "<h2>OSC 2 Pitch</h2>"
          + "<input type='range' min='0' max='127' value='0' step='0.01' class='slider param' id='osc_sine_pitch'>"
          + "<p id='osc_sine_pitch_label'>0</p><br>"
          + "<div id='osc_sine_pitch_mc' class='header' onclick=showHelp('osc_sine_pitch_mc_content')>Macro Controls...</div>"
          + "<div id='osc_sine_pitch_mc_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_x' class='mod_value'><p id='osc_sine_pitch_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_y' class='mod_value'><p id='osc_sine_pitch_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_z' class='mod_value'><p id='osc_sine_pitch_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_x' class='mod_value'><p id='osc_sine_pitch_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_y' class='mod_value'><p id='osc_sine_pitch_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_z' class='mod_value'><p id='osc_sine_pitch_z_label'>0</p><br>"
          + "</div></div></div></div>";
 }
 
@@ -304,18 +305,18 @@ const String getFilterLP() {
          + "<p id='lp_co_label'>0.0</p><br>"
          + "<div id='lp_co_mc' class='header' onclick=showHelp('lp_co_content')>Macro Controls...</div>"
          + "<div id='lp_co_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_x' class='mod_value'><p id='lp_co_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_y' class='mod_value'><p id='lp_co_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_z' class='mod_value'><p id='lp_co_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_x' class='mod_value'><p id='lp_co_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_y' class='mod_value'><p id='lp_co_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_co_z' class='mod_value'><p id='lp_co_z_label'>0</p><br>"
          + "</div></div><br>"
          + "<div class='parameter'><h2>LowPass Filter Mix</h2>"
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='lp_mix'>"
          + "<p id='lp_mix_label'>0.0</p><br>"
          + "<div id='lp_mix_mc' class='header' onclick=showHelp('lp_mix_content')>Macro Controls...</div>"
          + "<div id='lp_mix_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_x' class='mod_value'><p id='lp_mix_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_y' class='mod_value'><p id='lp_mix_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_z' class='mod_value'><p id='lp_mix_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_x' class='mod_value'><p id='lp_mix_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_y' class='mod_value'><p id='lp_mix_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='lp_mix_z' class='mod_value'><p id='lp_mix_z_label'>0</p><br>"
          + "</div></div></div><br>";
 }
 
@@ -325,27 +326,27 @@ const String getFilterBP() {
          + "<p id='bp_pos_label'>0.0</p><br>"
          + "<div id='bp_pos_mc' class='header' onclick=showHelp('bp_pos_content')>Macro Controls...</div>"
          + "<div id='bp_pos_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_x' class='mod_value'><p id='bp_pos_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_y' class='mod_value'><p id='bp_pos_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_z' class='mod_value'><p id='bp_pos_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_x' class='mod_value'><p id='bp_pos_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_y' class='mod_value'><p id='bp_pos_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_pos_z' class='mod_value'><p id='bp_pos_z_label'>0</p><br>"
          + "</div></div><br>"
          + "<div class='parameter'><h2>BandPass Band Width</h2>"
          + "<input type='range' min='1' max='10' value='0' step='0.1' class='slider param' id='bp_width'>"
          + "<p id='bp_width_label'>0</p><br>"
          + "<div id='bp_width_mc' class='header' onclick=showHelp('bp_width_content')>Macro Controls...</div>"
          + "<div id='bp_width_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_x' class='mod_value'><p id='bp_width_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_y' class='mod_value'><p id='bp_width_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_z' class='mod_value'><p id='bp_width_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_x' class='mod_value'><p id='bp_width_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_y' class='mod_value'><p id='bp_width_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_z' class='mod_value'><p id='bp_width_z_label'>0</p><br>"
          + "</div></div><br>"
          + "<div class='parameter'><h2>BandPass Filter Mix</h2>"
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='bp_mix'>"
          + "<p id='bp_mix_label'>0.0</p><br>"
          + "<div id='bp_mix_mc' class='header' onclick=showHelp('bp_mix_content')>Macro Controls...</div>"
          + "<div id='bp_mix_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_x' class='mod_value'><p id='bp_mix_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_y' class='mod_value'><p id='bp_mix_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_z' class='mod_value'><p id='bp_mix_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_x' class='mod_value'><p id='bp_mix_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_y' class='mod_value'><p id='bp_mix_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_mix_z' class='mod_value'><p id='bp_mix_z_label'>0</p><br>"
          + "</div></div></div></div><br>";
 }
 
@@ -356,18 +357,18 @@ const String getEffects() {
          + "<p id='ar_time_label'>0</p>ms<br>"
          + "<div id='ar_time_mc' class='header' onclick=showHelp('ar_time_content')>Macro Controls...</div>"
          + "<div id='ar_time_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_x' class='mod_value'><p id='ar_time_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_y' class='mod_value'><p id='ar_time_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_z' class='mod_value'><p id='ar_time_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_x' class='mod_value'><p id='ar_time_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_y' class='mod_value'><p id='ar_time_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='ar_time_z' class='mod_value'><p id='ar_time_z_label'>0</p><br>"
          + "</div></div><br>"
          + "<div class='parameter'><h2>Delay Amp</h2>"
          + "<input type='range' min='0' max='0.5' value='0' step='0.01' class='slider param' id='delay_amp'>"
          + "<p id='delay_amp_label'>0</p><br>"
          + "<div id='delay_amp_mc' class='header' onclick=showHelp('delay_amp_content')>Macro Controls...</div>"
          + "<div id='delay_amp_content' class='content'>"
-         + "<p>X Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_x' class='mod_value'><p id='delay_amp_x_label'>0</p><br>"
-         + "<p>Y Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_y' class='mod_value'><p id='delay_amp_y_label'>0</p><br>"
-         + "<p>Z Mod Ammount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_z' class='mod_value'><p id='delay_amp_z_label'>0</p><br>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_x' class='mod_value'><p id='delay_amp_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_y' class='mod_value'><p id='delay_amp_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_z' class='mod_value'><p id='delay_amp_z_label'>0</p><br>"
          + "</div></div></div></div>"
          + "</body>";
 }
@@ -388,7 +389,28 @@ const String getSliderCss() {
   + "input[type=range]:focus::-ms-fill-upper {background: #B6B1B1;}</style>";
 }
 
-String tutorial = "Tutorial WIP\n";
+const String getTutorial() {
+  return String("<style></stlye>")
+  +"<body><div class='content'><h1>Synthese:</h1><p>Bei diesem subtraktiven Synthesizer erzeugen 2 Oszillatoren klangliches Rohmaterial, welches dann durch klangverändernde Module (Lowpass- und Bandpass Filter) nachbearbeitet wird. Der gewünschte Klang wird erzielt, indem aus dem obertonreichen"
+  +"Spektrum der Oszillatoren die unerwünschten Frequenzanteile herausgefiltert oder abgesenkt werden (=Subtraktion).</p>"
+  +"</div><div class='content osc'><h1>Oszilatoren</h1><p>Das klangliche Rohmaterial wird in dieser Synthese-Engine";
+}
+const String getTutorial2() {  
+  return String("von zwei Square-Wave Oszillatoren erzeugt. Diese können unterschiedlichste Pitches und Amplituden haben. Jeder Oszillator besitzt einen <u>Pitsch</u> welcher in MIDI-Noten (0-127) umgerechnet und entbrechende Frequenzen erzeugt. Außerdem hat jeder Oszillator eine <u>Amplitude</u> welche das Gewicht des entsprechenden Oszillators angibt, der Parameter wird als Multiplikator angegeben (0 - 1).</br><b>Hinweise:</b><ul><li>Wenn der Pitsch auf 0 gesetzt ist kommt es beim Audio-Rendern zu Fragmenten, daher sollten keine Pitches von 0 abgespielt werden.</li></ul></p>");
+}
+const String getTutorial3() {  
+  return String("</div><div class='content filter'><h1>Filter</h1><p>Das von den Oszillatoren erzeugte Signal, kann durch 2 Filter gefiltert werden. Diese sind ein <u>Low Pass Filter</u> und eine <u>Band Pass Filter</u>. Ihre Funktion entspricht den Namen. Der Lowpass lässt die Frequenzen unter dem Cutoff durch. Höhere Frequenzen werden abgeschnitten. Der Bandpass legt einen Bereich fest in welchem die Frequenzen passieren dürfen. Andere Bereiche werden auch Hier Abgeschnitten. Der Lowpass hat einen <u>Cutoff</u> welcher wie beim <u>OSC</u> in MIDI-Noten (0-127) angegeben und auch in Frequenzen umgerechnet wird. Der <u>Band Pass</u> besitzt stattdessen eine in MIDI-Noten angegebene <u>Band Pass Position</u> welche die Position des Bandes im Frequenzspektrum angibt. Außerdem eine <u>Breite des Bandes</u>. Das Heißt wie weit, Frequenzen um die Position, noch passieren dürfen.</br>Beide Filter haben einen <u>Filter Mix</u> dieser muss, um einen Sound hören zu können != 0 sein.</br><b>Hinweise:</b><ul><li>Das schnelle Bewegen der Filter Einstellungen beim spielen des Instruments kann zu starken Verzerrungen führen. (z.B. durch Modulation)</li><li>Die Ausgabe kann bei zu lauter Amplitude clippen, d.h. manche Frequenzen können nicht dargestellt werden, das kann z.B. durch 2 Filter die sehr viel durchlassen passieren, bei einem solchen Fall die Gesamtlautstärke des Geräts runterstellen (~0.3)</li></ul></p>");
+}
+const String getTutorial4() {  
+  return String("</div><div class='content general fx'><h1>Delay & Envelope</h1><p>Wenn das Signal Ton an/Ton aus kommt kann die Zeit bis der Ton ganz Ab- oder Anklingt mit dem <u>Envelope</u> gesteuert werden. Die Einheit sind <u>ms</u> wenn der <u>Gate</u>-Parameter (An/Aus) sich ändert dauert es x ms bis der Ton komplett zu hören / verklangen ist.</br>");
+}
+const String getTutorial5() {  
+  return String("Der <u>Delay</u> ist ein einfacher Effekt welcher die vorausgegangen Signale in die Aktuellen reinmischt. Der Parameter <u>Delay Amp</u> beschreibt die Lautstärke des \"delayten\" Signals.");
+}
+const String getTutorial6() {  
+  return String("</p></div><div class='content modulation'><h1>Modulation</h1><p>Dieses Instrument verfügt über einen Sensor welcher <u>X, Y und Z</u> Position im Bereich <u>0-100</u> eines Elektronisch-Leitenden Objekts anzeigt. z.B. Einem Finger. Diese Positionen können dazu genutzt werden die eingestellten Parameter zu verändern. Die Einstellungen dazu finden sich unter dem Untermenü \"<u>Macro Controls...</u>\". Dort zu Finden sind Slider mit einem Bereich von <u>-1 bis 1</u> diese Werte werden als Prozent des verfügbaren Wertebereichs des Parameters interpretiert. <b>Beispiel: der Slider X Modulation wird auf 0.1 gesetzt bei OSC 1 AMP, welcher auf 0.5 steht. Wenn der Finger nun ganz Links im Sensorbereich erkannt wird bleibt der Wert des Parameters auf 0.5, doch die Bewegung des Fingers an den rechten Rand führt zu einer Modulation bis maximal: 0.6.</b> Diese Veränderung der Parameter kann zu sehr Interessanten Klängen führen. <b>Hinweise zum Sensor: </b><ul> <li>Da es sich um einen Prototypen handelt empfehlen wir den Sensor nicht zu berühren.</li><li>Die aktuelle erkannte Messtelle wird auf der Weboberfläche in der Matrix angezeigt. Die Größe des Punktes ist dabei die Z Achse, die die Entfernung zum Sensor abbildet.</li><li>Die konkreten Werte werden am oberen Bildschirmrand in Zahlen ausgegeben.</li></ul></p>")
+  + "</div></body>";
+}
 
 char buf[13];
 int normalizedX;
@@ -428,6 +450,16 @@ void setup() {
     server.sendContent(getFilterBP());
     server.sendContent(getEffects());
     ESP.wdtEnable(15000);
+  });
+
+  server.on("/tutorial", [](){
+    server.setContentLength(getTutorial().length() + getTutorial2().length() + getTutorial3().length() + getTutorial4().length() + getTutorial5().length() + getTutorial6().length());
+    server.send(200, "text/html", getTutorial());
+    server.sendContent(getTutorial2());
+    server.sendContent(getTutorial3());
+    server.sendContent(getTutorial4());
+    server.sendContent(getTutorial5());
+    server.sendContent(getTutorial6());
   });
 
   server.begin();
