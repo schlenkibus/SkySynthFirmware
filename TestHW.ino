@@ -334,8 +334,10 @@ const String getFilterBP() {
          + "<input type='range' min='1' max='10' value='0' step='0.1' class='slider param' id='bp_width'>"
          + "<p id='bp_width_label'>0</p><br>"
          + "<div id='bp_width_mc' class='header' onclick=showHelp('bp_width_content')>Macro Controls...</div>"
-         + "<div id='bp_width_content' class='content'>"
-         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_x' class='mod_value'><p id='bp_width_x_label'>0</p><br>"
+         + "<div id='bp_width_content' class='content'>";
+}
+const String getFilterBP2() {         
+  return String("<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_x' class='mod_value'><p id='bp_width_x_label'>0</p><br>")
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_y' class='mod_value'><p id='bp_width_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='bp_width_z' class='mod_value'><p id='bp_width_z_label'>0</p><br>"
          + "</div></div><br>"
@@ -369,8 +371,15 @@ const String getEffects() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_x' class='mod_value'><p id='delay_amp_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_y' class='mod_value'><p id='delay_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_z' class='mod_value'><p id='delay_amp_z_label'>0</p><br>"
-         + "</div></div></div></div>"
+         + "</div>"+ addHelpBox("delay_amp", "Delay - Wiederholt vorhergehende Audio-Signale mit entsprechenem Faktor!") + "</div></div></div>"
          + "</body>";
+}
+
+const String addHelpBox(String id, String text) {
+  return String("<div id='"+ id +"_help_btn' class='header' onclick=showHelp('"+id+"_help')>?</div>")
+         + "<div id='"+ id +"_help' class='content help'>"
+         +  text
+         + "</div>";
 }
 
 const String getSliderCss() {
@@ -390,25 +399,25 @@ const String getSliderCss() {
 }
 
 const String getTutorial() {
-  return String("<style></stlye>")
-  +"<body><div class='content'><h1>Synthese:</h1><p>Bei diesem subtraktiven Synthesizer erzeugen 2 Oszillatoren klangliches Rohmaterial, welches dann durch klangverändernde Module (Lowpass- und Bandpass Filter) nachbearbeitet wird. Der gewünschte Klang wird erzielt, indem aus dem obertonreichen"
-  +"Spektrum der Oszillatoren die unerwünschten Frequenzanteile herausgefiltert oder abgesenkt werden (=Subtraktion).</p>"
+  return String("<style>.content {width: 30%;border-style: dotted;margin: 20px;margin-left: 35%;padding: 10px;}.content h1 {text-align: center;}</style>")
+  +"<body><div class='content'><h1>Synthese:</h1><p>Bei diesem subtraktiven Synthesizer erzeugen 2 Oszillatoren klangliches Rohmaterial, welches dann durch klangveraendernde Module (Lowpass- und Bandpass Filter) nachbearbeitet wird. Der gewuenschte Klang wird erzielt, indem aus dem obertonreichen"
+  +"Spektrum der Oszillatoren die unerwuenschten Frequenzanteile herausgefiltert oder abgesenkt werden (=Subtraktion).</p>"
   +"</div><div class='content osc'><h1>Oszilatoren</h1><p>Das klangliche Rohmaterial wird in dieser Synthese-Engine";
 }
 const String getTutorial2() {  
-  return String("von zwei Square-Wave Oszillatoren erzeugt. Diese können unterschiedlichste Pitches und Amplituden haben. Jeder Oszillator besitzt einen <u>Pitsch</u> welcher in MIDI-Noten (0-127) umgerechnet und entbrechende Frequenzen erzeugt. Außerdem hat jeder Oszillator eine <u>Amplitude</u> welche das Gewicht des entsprechenden Oszillators angibt, der Parameter wird als Multiplikator angegeben (0 - 1).</br><b>Hinweise:</b><ul><li>Wenn der Pitsch auf 0 gesetzt ist kommt es beim Audio-Rendern zu Fragmenten, daher sollten keine Pitches von 0 abgespielt werden.</li></ul></p>");
+  return String("von zwei Square-Wave Oszillatoren erzeugt. Diese koennen unterschiedlichste Pitches und Amplituden haben. Jeder Oszillator besitzt einen <u>Pitsch</u> welcher in MIDI-Noten (0-127) umgerechnet und entbrechende Frequenzen erzeugt. Au&szlig;erdem hat jeder Oszillator eine <u>Amplitude</u> welche das Gewicht des entsprechenden Oszillators angibt, der Parameter wird als Multiplikator angegeben (0 - 1).</br><b>Hinweise:</b><ul><li>Wenn der Pitsch auf 0 gesetzt ist kommt es beim Audio-Rendern zu Fragmenten, daher sollten keine Pitches von 0 abgespielt werden.</li></ul></p>");
 }
 const String getTutorial3() {  
-  return String("</div><div class='content filter'><h1>Filter</h1><p>Das von den Oszillatoren erzeugte Signal, kann durch 2 Filter gefiltert werden. Diese sind ein <u>Low Pass Filter</u> und eine <u>Band Pass Filter</u>. Ihre Funktion entspricht den Namen. Der Lowpass lässt die Frequenzen unter dem Cutoff durch. Höhere Frequenzen werden abgeschnitten. Der Bandpass legt einen Bereich fest in welchem die Frequenzen passieren dürfen. Andere Bereiche werden auch Hier Abgeschnitten. Der Lowpass hat einen <u>Cutoff</u> welcher wie beim <u>OSC</u> in MIDI-Noten (0-127) angegeben und auch in Frequenzen umgerechnet wird. Der <u>Band Pass</u> besitzt stattdessen eine in MIDI-Noten angegebene <u>Band Pass Position</u> welche die Position des Bandes im Frequenzspektrum angibt. Außerdem eine <u>Breite des Bandes</u>. Das Heißt wie weit, Frequenzen um die Position, noch passieren dürfen.</br>Beide Filter haben einen <u>Filter Mix</u> dieser muss, um einen Sound hören zu können != 0 sein.</br><b>Hinweise:</b><ul><li>Das schnelle Bewegen der Filter Einstellungen beim spielen des Instruments kann zu starken Verzerrungen führen. (z.B. durch Modulation)</li><li>Die Ausgabe kann bei zu lauter Amplitude clippen, d.h. manche Frequenzen können nicht dargestellt werden, das kann z.B. durch 2 Filter die sehr viel durchlassen passieren, bei einem solchen Fall die Gesamtlautstärke des Geräts runterstellen (~0.3)</li></ul></p>");
+  return String("</div><div class='content filter'><h1>Filter</h1><p>Das von den Oszillatoren erzeugte Signal, kann durch 2 Filter gefiltert werden. Diese sind ein <u>Low Pass Filter</u> und eine <u>Band Pass Filter</u>. Ihre Funktion entspricht den Namen. Der Lowpass laesst die Frequenzen unter dem Cutoff durch. Hoehere Frequenzen werden abgeschnitten. Der Bandpass legt einen Bereich fest in welchem die Frequenzen passieren duerfen. Andere Bereiche werden auch Hier Abgeschnitten. Der Lowpass hat einen <u>Cutoff</u> welcher wie beim <u>OSC</u> in MIDI-Noten (0-127) angegeben und auch in Frequenzen umgerechnet wird. Der <u>Band Pass</u> besitzt stattdessen eine in MIDI-Noten angegebene <u>Band Pass Position</u> welche die Position des Bandes im Frequenzspektrum angibt. Au&szlig;erdem eine <u>Breite des Bandes</u>. Das Hei&szlig;t wie weit, Frequenzen um die Position, noch passieren duerfen.</br>Beide Filter haben einen <u>Filter Mix</u> dieser muss, um einen Sound hoeren zu koennen != 0 sein.</br><b>Hinweise:</b><ul><li>Das schnelle Bewegen der Filter Einstellungen beim spielen des Instruments kann zu starken Verzerrungen fuehren. (z.B. durch Modulation)</li><li>Die Ausgabe kann bei zu lauter Amplitude clippen, d.h. manche Frequenzen koennen nicht dargestellt werden, das kann z.B. durch 2 Filter die sehr viel durchlassen passieren, bei einem solchen Fall die Gesamtlautstaerke des Geraets runterstellen (~0.3)</li></ul></p>");
 }
 const String getTutorial4() {  
-  return String("</div><div class='content general fx'><h1>Delay & Envelope</h1><p>Wenn das Signal Ton an/Ton aus kommt kann die Zeit bis der Ton ganz Ab- oder Anklingt mit dem <u>Envelope</u> gesteuert werden. Die Einheit sind <u>ms</u> wenn der <u>Gate</u>-Parameter (An/Aus) sich ändert dauert es x ms bis der Ton komplett zu hören / verklangen ist.</br>");
+  return String("</div><div class='content general fx'><h1>Delay & Envelope</h1><p>Wenn das Signal Ton an/Ton aus kommt kann die Zeit bis der Ton ganz Ab- oder Anklingt mit dem <u>Envelope</u> gesteuert werden. Die Einheit sind <u>ms</u> wenn der <u>Gate</u>-Parameter (An/Aus) sich aendert dauert es x ms bis der Ton komplett zu hoeren / verklangen ist.</br>");
 }
 const String getTutorial5() {  
-  return String("Der <u>Delay</u> ist ein einfacher Effekt welcher die vorausgegangen Signale in die Aktuellen reinmischt. Der Parameter <u>Delay Amp</u> beschreibt die Lautstärke des \"delayten\" Signals.");
+  return String("Der <u>Delay</u> ist ein einfacher Effekt welcher die vorausgegangen Signale in die Aktuellen reinmischt. Der Parameter <u>Delay Amp</u> beschreibt die Lautstaerke des \"delayten\" Signals.");
 }
 const String getTutorial6() {  
-  return String("</p></div><div class='content modulation'><h1>Modulation</h1><p>Dieses Instrument verfügt über einen Sensor welcher <u>X, Y und Z</u> Position im Bereich <u>0-100</u> eines Elektronisch-Leitenden Objekts anzeigt. z.B. Einem Finger. Diese Positionen können dazu genutzt werden die eingestellten Parameter zu verändern. Die Einstellungen dazu finden sich unter dem Untermenü \"<u>Macro Controls...</u>\". Dort zu Finden sind Slider mit einem Bereich von <u>-1 bis 1</u> diese Werte werden als Prozent des verfügbaren Wertebereichs des Parameters interpretiert. <b>Beispiel: der Slider X Modulation wird auf 0.1 gesetzt bei OSC 1 AMP, welcher auf 0.5 steht. Wenn der Finger nun ganz Links im Sensorbereich erkannt wird bleibt der Wert des Parameters auf 0.5, doch die Bewegung des Fingers an den rechten Rand führt zu einer Modulation bis maximal: 0.6.</b> Diese Veränderung der Parameter kann zu sehr Interessanten Klängen führen. <b>Hinweise zum Sensor: </b><ul> <li>Da es sich um einen Prototypen handelt empfehlen wir den Sensor nicht zu berühren.</li><li>Die aktuelle erkannte Messtelle wird auf der Weboberfläche in der Matrix angezeigt. Die Größe des Punktes ist dabei die Z Achse, die die Entfernung zum Sensor abbildet.</li><li>Die konkreten Werte werden am oberen Bildschirmrand in Zahlen ausgegeben.</li></ul></p>")
+  return String("</p></div><div class='content modulation'><h1>Modulation</h1><p>Dieses Instrument verfuegt ueber einen Sensor welcher <u>X, Y und Z</u> Position im Bereich <u>0-100</u> eines Elektronisch-Leitenden Objekts anzeigt. z.B. Einem Finger. Diese Positionen koennen dazu genutzt werden die eingestellten Parameter zu veraendern. Die Einstellungen dazu finden sich unter dem Untermenue \"<u>Macro Controls...</u>\". Dort zu Finden sind Slider mit einem Bereich von <u>-1 bis 1</u> diese Werte werden als Prozent des verfuegbaren Wertebereichs des Parameters interpretiert. <b>Beispiel: der Slider X Modulation wird auf 0.1 gesetzt bei OSC 1 AMP, welcher auf 0.5 steht. Wenn der Finger nun ganz Links im Sensorbereich erkannt wird bleibt der Wert des Parameters auf 0.5, doch die Bewegung des Fingers an den rechten Rand fuehrt zu einer Modulation bis maximal: 0.6.</b> Diese Veraenderung der Parameter kann zu sehr Interessanten Klaengen fuehren. <b>Hinweise zum Sensor: </b><ul> <li>Da es sich um einen Prototypen handelt empfehlen wir den Sensor nicht zu beruehren.</li><li>Die aktuelle erkannte Messtelle wird auf der Weboberflaeche in der Matrix angezeigt. Die Groe&szlig;e des Punktes ist dabei die Z Achse, die die Entfernung zum Sensor abbildet.</li><li>Die konkreten Werte werden am oberen Bildschirmrand in Zahlen ausgegeben.</li></ul></p>")
   + "</div></body>";
 }
 
@@ -417,7 +426,7 @@ int normalizedX;
 int normalizedY;
 int normalizedZ;
 
-const auto lenght = getCanvasDrawing().length() + getJavaScript().length() + getCss().length() + getSliderCss().length() + getGeneral().length() + getOSC1().length() + getOSC2().length() + getFilterLP().length() + getFilterBP().length() + getEffects().length();
+const auto lenght = getCanvasDrawing().length() + getJavaScript().length() + getCss().length() + getSliderCss().length() + getGeneral().length() + getOSC1().length() + getOSC2().length() + getFilterLP().length() + getFilterBP().length() + getFilterBP2().length() + getEffects().length();
 
 void setup() {
   ESP.wdtDisable();
@@ -438,7 +447,7 @@ void setup() {
   server.on("/", []() {
     Serial.println("Requested / ");
     ESP.wdtDisable();
-    server.setContentLength(lenght);
+    server.setContentLength(CONTENT_LENGTH_UNKNOWN);
     server.send(200, "text/html", getCanvasDrawing());
     server.sendContent(getJavaScript());
     server.sendContent(getCss());
@@ -448,7 +457,10 @@ void setup() {
     server.sendContent(getOSC2());
     server.sendContent(getFilterLP());
     server.sendContent(getFilterBP());
+    server.sendContent(getFilterBP2());
     server.sendContent(getEffects());
+    server.sendContent("");
+    server.client().stop();
     ESP.wdtEnable(15000);
   });
 
