@@ -220,20 +220,21 @@ const String getCss() {
          + "}"
          + "#canvas {"
          + "display:block;"
+         + "padding-left: 10%;"
          + "}"
          + ".header div {"
          + "  border-width: 20px; "
          + "  border-style: outset; "
-         + "}"
-         + ".header: hover {"
-         + "  color: blue; "
-         + "}\n#rxConsole {font-size: 25pt; color: #DA78D7; text-align: center; resize: none; background-color: grey; border: none; padding-top: 20px font-style: bold; }"
-         + ".top {  background-color: grey; display: block-inline; width: 1360px; text-align: center;"
+         + "}body {background-color: lightslategray;}"
+         + ".flexcontainer{ padding-left: 30%; }"
+         + " .header:hover {  border-style: ridge;border-radius: 40px; }"
+         + "#rxConsole {font-size: 25pt; color: #DA78D7; text-align: center; resize: none; background-color: grey; border: none; padding-top: 50px font-style: bold; }"
+         + ".top { padding-bottom: 30px; background-color: grey; display: block-inline; width: 1360px; text-align: center;"
          + "}";
 }
 
 const String getGeneral() {
-  return String("<body><div class='top'><textarea id = \"rxConsole\" readonly></textarea>\n")
+  return String("<body><div class='flexcontainer'><div class='top'><textarea id = \"rxConsole\" readonly></textarea>\n")
          + "<canvas id='canvas' width='1150' height='800'></canvas><a href='/tutorial'>How To Play!</a></div>\n"
          + "<div id='params'>"
          + "<div class='volume group'><div class='parameter'><h2>Volume</h2>"
@@ -277,8 +278,28 @@ const String getOSC1() {
          + "</div>";
 }
 
+const String getOSC3() {
+  return String("<div class='osc3'><div class='parameter'><h2>OSC 2 AMP</h2>")
+         + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='osc_3_amp'><p id='osc_3_amp_label'>0.0</p><br>"
+         + "<div id='osc_3_amp_mc' class='header' onclick=showHelp('osc_3_amp_mc_content')>Macro Controls...</div>"
+         + "<div id='osc_3_amp_mc_content' class='content'>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_amp_x' class='mod_value'><p id='osc_3_amp_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_amp_y' class='mod_value'><p id='osc_3_amp_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_amp_z' class='mod_value'><p id='osc_3_amp_z_label'>0</p><br>"
+         + "</div>"+ addHelpBox("osc3amp", "Oszillator Amplitiude - Lautstaerke des Oszillators (In Prozent 0-100).") + "</div><br><div class='parameter'>"
+         + "<h2>OSC 2 Pitch</h2>"
+         + "<input type='range' min='0' max='127' value='0' step='0.01' class='slider param' id='osc_3_pitch'>"
+         + "<p id='osc_3_pitch_label'>0</p><br>"
+         + "<div id='osc_3_pitch_mc' class='header' onclick=showHelp('osc_3_pitch_mc_content')>Macro Controls...</div>"
+         + "<div id='osc_3_pitch_mc_content' class='content'>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_pitch_x' class='mod_value'><p id='osc_3_pitch_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_pitch_y' class='mod_value'><p id='osc_3_pitch_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_3_pitch_z' class='mod_value'><p id='osc_3_pitch_z_label'>0</p><br>"
+         + "</div>"+ addHelpBox("osc3pitch", "Oszillator Pitch - Frequenz des Oszillators (In MIDI-Noten 0-127).") + "</div></div></br>";
+}
+
 const String getOSC2() {
-  return String("<div class='osc2'><div class='parameter'><h2>OSC 2 AMP</h2>")
+  return String("<div class='osc2'><div class='parameter'><h2>OSC 3 AMP</h2>")
          + "<input type='range' min='0.0' max='1.0' value='0.0' step='0.01' class='slider param' id='osc_sine_amp'><p id='osc_sine_amp_label'>0.0</p><br>"
          + "<div id='osc_sine_amp_mc' class='header' onclick=showHelp('osc_sine_amp_mc_content')>Macro Controls...</div>"
          + "<div id='osc_sine_amp_mc_content' class='content'>"
@@ -286,7 +307,7 @@ const String getOSC2() {
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_y' class='mod_value'><p id='osc_sine_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_amp_z' class='mod_value'><p id='osc_sine_amp_z_label'>0</p><br>"
          + "</div>"+ addHelpBox("osc2amp", "Oszillator Amplitiude - Lautstaerke des Oszillators (In Prozent 0-100).") + "</div><br><div class='parameter'>"
-         + "<h2>OSC 2 Pitch</h2>"
+         + "<h2>OSC 3 Pitch</h2>"
          + "<input type='range' min='0' max='127' value='0' step='0.01' class='slider param' id='osc_sine_pitch'>"
          + "<p id='osc_sine_pitch_label'>0</p><br>"
          + "<div id='osc_sine_pitch_mc' class='header' onclick=showHelp('osc_sine_pitch_mc_content')>Macro Controls...</div>"
@@ -294,7 +315,7 @@ const String getOSC2() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_x' class='mod_value'><p id='osc_sine_pitch_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_y' class='mod_value'><p id='osc_sine_pitch_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='osc_sine_pitch_z' class='mod_value'><p id='osc_sine_pitch_z_label'>0</p><br>"
-         + "</div>"+ addHelpBox("osc2pitch", "Oszillator Pitch - Frequenz des Oszillators (In MIDI-Noten 0-127).") + "</div></div></div>";
+         + "</div>"+ addHelpBox("osc2pitch", "Oszillator Pitch - Frequenz des Oszillators (In MIDI-Noten 0-127).") + "</div></div></div></div>";
 }
 
 const String getFilterLP() {
@@ -371,8 +392,17 @@ const String getEffects() {
          + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_x' class='mod_value'><p id='delay_amp_x_label'>0</p><br>"
          + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_y' class='mod_value'><p id='delay_amp_y_label'>0</p><br>"
          + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='delay_amp_z' class='mod_value'><p id='delay_amp_z_label'>0</p><br>"
-         + "</div>"+ addHelpBox("delay_amp", "Delay - Wiederholt vorhergehende Audio-Signale mit entsprechenem Faktor. (0% - 50%)") + "</div></div></div>"
-         + "</body>";
+         + "</div>"+ addHelpBox("delay_amp", "Delay - Wiederholt vorhergehende Audio-Signale mit entsprechenem Faktor. (0% - 50%)") + "</div></br>"
+         + "<div class='parameter'><h2>Chorus Amp</h2>"
+         + "<input type='range' min='0' max='1' value='0' step='0.01' class='slider param' id='chrous_wet'>"
+         + "<p id='chrous_wet_label'>0</p><br>"
+         + "<div id='chrous_wet_mc' class='header' onclick=showHelp('chrous_wet_content')>Macro Controls...</div>"
+         + "<div id='chrous_wet_content' class='content'>"
+         + "<p>X Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='chrous_wet_x' class='mod_value'><p id='chrous_wet_x_label'>0</p><br>"
+         + "<p>Y Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='chrous_wet_y' class='mod_value'><p id='chrous_wet_y_label'>0</p><br>"
+         + "<p>Z Mod Amount</p><input type='range' min='-1' max='1' value='0' step='0.01' id='chrous_wet_z' class='mod_value'><p id='chrous_wet_z_label'>0</p><br>"
+         + "</div>"+ addHelpBox("chrous_wet", "Chorus Amplitude - Ein sehr kurzer Delay mit Pitch Aenderung -> Vollerer Sound. (0% - 100%)") + "</div><br>"
+         + "</div></div></div></body>";
 }
 
 const String addHelpBox(String id, String text) {
@@ -454,6 +484,7 @@ void setup() {
     server.sendContent(getSliderCss());
     server.sendContent(getGeneral());
     server.sendContent(getOSC1());
+    server.sendContent(getOSC3());
     server.sendContent(getOSC2());
     server.sendContent(getFilterLP());
     server.sendContent(getFilterBP());
